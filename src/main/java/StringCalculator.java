@@ -3,31 +3,36 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
 	public static int calculate(String input) {
-		int result = 0;
-		if (input == null || input.isEmpty()) {
+		if (isBlank(input)) {
 			return 0;
 		}
+		return sum(split(input));
+	}
 
-		Matcher m = Pattern.compile("//(.)\n(.*)").matcher(input);
-		if (m.find()) {
-			String customDelimiter = m.group(1);
-			String[] values = m.group(2).split(customDelimiter);
-			for (String value : values) {
-				if (value.equals("") || value.chars().anyMatch(c -> c < '0' || c > '9')) {
-					throw new RuntimeException();
-				}
-				result += Integer.parseInt(value);
-			}
-			return result;
-		}
+	public static boolean isBlank(String input) {
+		return input == null || input.isEmpty();
+	}
 
-		String[] values = input.split(",|:");
+	public static int sum(String[] values) {
+		int result = 0;
 		for (String value : values) {
-			if (value.equals("") || value.chars().anyMatch(c -> c < '0' || c > '9')) {
-				throw new RuntimeException();
-			}
+			isPositiveNumber(value);
 			result += Integer.parseInt(value);
 		}
 		return result;
+	}
+
+	public static void isPositiveNumber(String value) {
+		if (value.isEmpty() || value.chars().anyMatch(c -> c < '0' || c > '9')) {
+			throw new RuntimeException();
+		}
+	}
+
+	public static String[] split(String input) {
+		Matcher m = Pattern.compile("//(.)\n(.*)").matcher(input);
+		if (m.find()) {
+			return m.group(2).split(m.group(1));
+		}
+		return input.split(",|:");
 	}
 }
