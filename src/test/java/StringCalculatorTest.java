@@ -22,4 +22,9 @@ public class StringCalculatorTest {
 	void 하나의_수_입력() {
 		assertThat(StringCalculator.calculate("1")).isEqualTo(1);
 	}
+
+	@Test
+	void 커스텀_구분자를_가진_입력() {
+		assertThat(StringCalculator.calculate("//;\n1;2;3")).isEqualTo(6);
+	}
 }
