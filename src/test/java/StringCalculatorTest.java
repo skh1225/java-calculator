@@ -27,4 +27,10 @@ public class StringCalculatorTest {
 	void 커스텀_구분자를_가진_입력() {
 		assertThat(StringCalculator.calculate("//;\n1;2;3")).isEqualTo(6);
 	}
+
+	@Test
+	void 숫자_이외의_값_또는_음수() {
+		assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> StringCalculator.calculate("-1,2,3"));
+		assertThatExceptionOfType(RuntimeException.class).isThrownBy(() -> StringCalculator.calculate("a,2,3"));
+	}
 }

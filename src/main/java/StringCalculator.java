@@ -13,6 +13,9 @@ public class StringCalculator {
 			String customDelimiter = m.group(1);
 			String[] values = m.group(2).split(customDelimiter);
 			for (String value : values) {
+				if (value.equals("") || value.chars().anyMatch(c -> c < '0' || c > '9')) {
+					throw new RuntimeException();
+				}
 				result += Integer.parseInt(value);
 			}
 			return result;
@@ -20,6 +23,9 @@ public class StringCalculator {
 
 		String[] values = input.split(",|:");
 		for (String value : values) {
+			if (value.equals("") || value.chars().anyMatch(c -> c < '0' || c > '9')) {
+				throw new RuntimeException();
+			}
 			result += Integer.parseInt(value);
 		}
 		return result;
